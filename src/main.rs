@@ -1,7 +1,7 @@
 mod animation;
 mod camera;
+mod cursor;
 mod orzel;
-
 use bevy::prelude::*;
 
 fn main() {
@@ -9,7 +9,8 @@ fn main() {
         .add_plugins((
             // Add the plugins
             DefaultPlugins,
-            //camera::CameraPlugin,
+            camera::CameraPlugin,
+            cursor::CursorPlugin,
             orzel::OrzelPlugin,
             animation::AnimationPlugin,
         ))
