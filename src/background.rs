@@ -10,7 +10,7 @@ pub struct Background {
 }
 
 #[derive(Component, Debug, Default)]
-pub struct Stars {}
+pub struct Stars;
 
 fn setup(
     mut commands: Commands,

@@ -1,6 +1,7 @@
 mod animation;
 mod background;
 mod camera;
+mod cleanup;
 mod cursor;
 mod orzel;
 use bevy::prelude::*;
@@ -22,6 +23,7 @@ fn main() {
             camera::CameraPlugin,
             cursor::CursorPlugin,
             animation::AnimationPlugin,
+            cleanup::CameraPlugin,
             background::BackgroundPlugin,
             orzel::OrzelPlugin,
         ))
