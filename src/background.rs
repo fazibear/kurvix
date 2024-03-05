@@ -9,11 +9,37 @@ pub struct Background {
     pub displayed_time: f32,
 }
 
+#[derive(Component, Debug, Default)]
+pub struct Stars {}
+
 fn setup(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut layouts: ResMut<Assets<TextureAtlasLayout>>,
 ) {
+    let mut rng = rand::thread_rng();
+
+    let stars = asset_server.load("stars.png");
+
+    for y in -5..5 {
+        for x in -5..5 {
+            commands.spawn((
+                Stars {},
+                SpriteBundle {
+                    texture: stars.clone(),
+                    transform: Transform::default()
+                        .with_scale(Vec3::splat(0.5))
+                        .with_translation(Vec3::new(
+                            (x * 300 + rng.gen_range(500..800)) as f32,
+                            (y * 200 + rng.gen_range(500..800)) as f32,
+                            -0.9,
+                        )),
+                    ..default()
+                },
+            ));
+        }
+    }
+
     let texture = asset_server.load("background.png");
     let layout = layouts.add(TextureAtlasLayout::from_grid(
         Vec2::new(912., 16.),
@@ -22,7 +48,6 @@ fn setup(
         None,
         None,
     ));
-    let mut rng = rand::thread_rng();
 
     for _ in 0..10 {
         commands.spawn((
@@ -34,7 +59,7 @@ fn setup(
                 texture: texture.clone(),
                 transform: Transform::default()
                     .with_scale(Vec3::splat(0.6))
-                    .with_translation(Vec3::new(0.0, 0.0, -0.9)),
+                    .with_translation(Vec3::new(0.0, 0.0, -0.8)),
                 atlas: TextureAtlas {
                     layout: layout.clone(),
                     index: rng.gen_range(0..4),
@@ -56,6 +81,8 @@ fn update(
             transform.translation.x = rng.gen_range(-500.0..500.0);
             transform.translation.y = rng.gen_range(-400.0..400.0);
             texture_atlas.index = rng.gen_range(0..4);
+        } else {
+            // transform.translation.x += 5.0
         }
     }
 }
