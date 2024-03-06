@@ -9,7 +9,7 @@ use bevy::prelude::*;
 fn main() {
     let default_plugin = DefaultPlugins.set(WindowPlugin {
         primary_window: Some(Window {
-            title: "Dull Dicks".to_string(),
+            title: "Kurvix Saviours".to_string(),
             ..Default::default()
         }),
         ..default()

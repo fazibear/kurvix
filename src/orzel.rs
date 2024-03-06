@@ -6,6 +6,9 @@ pub struct OrzelPlugin;
 #[derive(Component, Debug, Default)]
 pub struct Orzel {}
 
+#[derive(Component, Debug, Default)]
+pub struct Strzal {}
+
 fn setup(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
