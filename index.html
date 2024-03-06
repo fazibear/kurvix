@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<body style="margin: 0px;">
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    * {
+      outline: 0;
+    }
+  </style>
+  <script type="module">
+    import init from './kurvix_saviours.js'
+
+    init().catch((error) => {
+      if (!error.message.startsWith("Using exceptions for control flow, don't mind me. This isn't actually an error!")) {
+        throw error;
+      }
+    });
+  </script>
+</body>
+
+</html>
