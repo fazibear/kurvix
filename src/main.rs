@@ -1,9 +1,10 @@
-mod animation;
+mod animable;
 mod background;
 mod bomba;
 mod camera;
 mod cleanup;
 mod cursor;
+mod movable;
 mod orzel;
 use bevy::prelude::*;
 
@@ -23,7 +24,8 @@ fn main() {
             default_plugin,
             camera::CameraPlugin,
             cursor::CursorPlugin,
-            animation::AnimationPlugin,
+            animable::AnimablePlugin,
+            movable::MovablePlugin,
             cleanup::CameraPlugin,
             background::BackgroundPlugin,
             bomba::BombaPlugin,

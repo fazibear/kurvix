@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::animation::Animation;
+use crate::animable::Animable;
 pub struct OrzelPlugin;
 
 #[derive(Component, Debug, Default)]
@@ -20,7 +20,7 @@ fn setup(
         None,
     ));
 
-    // Use only the subset of sprites in the sheet that make up the run animation
+    // Use only the subset of sprites in the sheet that make up the run animable
     commands.spawn((
         Orzel {},
         SpriteSheetBundle {
@@ -29,7 +29,7 @@ fn setup(
             atlas: TextureAtlas { layout, index: 0 },
             ..default()
         },
-        Animation {
+        Animable {
             passed_frames: 0.,
             current_frame: 0,
             frames: 4,
@@ -38,9 +38,10 @@ fn setup(
     ));
 }
 
-fn update(mut query: Query<(&Animation, &mut TextureAtlas), With<Orzel>>) {
-    let (animation, mut texture_atlas) = query.single_mut();
-    texture_atlas.index = animation.current_frame;
+fn animate(mut query: Query<(&Animable, &mut TextureAtlas), With<Orzel>>) {
+    for (animable, mut texture_atlas) in query.iter_mut() {
+        texture_atlas.index = animable.current_frame;
+    }
 }
 
 fn moves(
@@ -63,7 +64,7 @@ fn moves(
 impl Plugin for OrzelPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, setup);
-        app.add_systems(Update, update);
+        app.add_systems(Update, animate);
         app.add_systems(Update, moves);
     }
 }

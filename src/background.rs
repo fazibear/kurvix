@@ -30,8 +30,8 @@ fn setup(
                     transform: Transform::default()
                         .with_scale(Vec3::splat(0.5))
                         .with_translation(Vec3::new(
-                            (x * 300 + rng.gen_range(500..800)) as f32,
-                            (y * 200 + rng.gen_range(500..800)) as f32,
+                            (x * 200 + rng.gen_range(300..500)) as f32,
+                            (y * 200 + rng.gen_range(300..500)) as f32,
                             -0.9,
                         )),
                     ..default()
