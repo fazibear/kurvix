@@ -1,5 +1,6 @@
 mod animation;
 mod background;
+mod bomba;
 mod camera;
 mod cleanup;
 mod cursor;
@@ -25,6 +26,7 @@ fn main() {
             animation::AnimationPlugin,
             cleanup::CameraPlugin,
             background::BackgroundPlugin,
+            bomba::BombaPlugin,
             orzel::OrzelPlugin,
         ))
         .run();
