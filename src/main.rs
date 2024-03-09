@@ -3,10 +3,12 @@ mod background;
 mod bomba;
 mod camera;
 mod cleanup;
+mod collisions;
 mod cursor;
 mod dupix;
 mod movable;
 mod orzel;
+
 use bevy::prelude::*;
 
 fn main() {
@@ -23,15 +25,16 @@ fn main() {
         .add_plugins((
             // Add the plugins
             default_plugin,
-            camera::CameraPlugin,
-            cursor::CursorPlugin,
             animable::AnimablePlugin,
-            movable::MovablePlugin,
-            cleanup::CameraPlugin,
             background::BackgroundPlugin,
             bomba::BombaPlugin,
-            orzel::OrzelPlugin,
+            camera::CameraPlugin,
+            cleanup::CameraPlugin,
+            collisions::CollisionsPlugin,
+            cursor::CursorPlugin,
             dupix::DupixPlugin,
+            movable::MovablePlugin,
+            orzel::OrzelPlugin,
         ))
         .run();
 }
