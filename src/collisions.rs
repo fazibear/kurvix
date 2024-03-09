@@ -4,17 +4,17 @@ pub struct CollisionsPlugin;
 fn bomba_vs_dupix(
     mut commands: Commands,
     q_bomba: Query<(Entity, &Transform), With<crate::bomba::Bomba>>,
-    q_dupix: Query<(Entity, &Transform), With<crate::dupix::Dupix>>,
+    mut q_dupix: Query<(&mut crate::movable::Movable, &Transform), With<crate::dupix::Dupix>>,
 ) {
     for (bomba, bomba_transform) in q_bomba.iter() {
-        for (dupix, dupix_transform) in q_dupix.iter() {
+        for (mut dupix, dupix_transform) in q_dupix.iter_mut() {
             if bomba_transform
                 .translation
                 .distance(dupix_transform.translation)
-                < 50.
+                < 40.
             {
-                commands.entity(dupix).despawn_recursive();
                 commands.entity(bomba).despawn_recursive();
+                dupix.direction.y = -500.;
             }
         }
     }

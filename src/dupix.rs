@@ -1,4 +1,3 @@
-use bevy::input::mouse::MouseButtonInput;
 use bevy::prelude::*;
 
 use crate::animable::Animable;
@@ -15,7 +14,7 @@ pub struct DupixAsset {
     pub texture: Handle<Image>,
 }
 
-fn spawn(assets: Res<DupixAsset>, mut commands: Commands, mut query: Query<(&Dupix)>) {
+fn spawn(assets: Res<DupixAsset>, mut commands: Commands, query: Query<&Dupix>) {
     let mut rng = rand::thread_rng();
 
     if query.iter().count() < 10 {
@@ -27,7 +26,7 @@ fn spawn(assets: Res<DupixAsset>, mut commands: Commands, mut query: Query<(&Dup
                     .with_scale(Vec3::splat(0.5))
                     .with_translation(Vec3::new(
                         (-500 - rng.gen_range(0..3000)) as f32,
-                        rng.gen_range(-300..300) as f32,
+                        rng.gen_range(-400..400) as f32,
                         -0.5,
                     )),
                 atlas: TextureAtlas {

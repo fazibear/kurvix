@@ -50,7 +50,7 @@ fn shoot(
                     fps: 15.,
                 },
                 Movable {
-                    direction: Vec2::new(-500., 0.),
+                    direction: Vec2::new(-700., 0.),
                 },
             ));
         }
