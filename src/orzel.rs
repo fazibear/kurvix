@@ -32,7 +32,8 @@ fn setup(
         Animable {
             passed_frames: 0.,
             current_frame: 0,
-            frames: 4,
+            start_frame: 0,
+            end_frame: 3,
             fps: 15.,
         },
     ));

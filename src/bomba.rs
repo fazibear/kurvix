@@ -46,7 +46,8 @@ fn shoot(
                 Animable {
                     passed_frames: 0.,
                     current_frame: 0,
-                    frames: 6,
+                    start_frame: 0,
+                    end_frame: 5,
                     fps: 15.,
                 },
                 Movable {

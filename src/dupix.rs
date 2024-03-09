@@ -26,7 +26,7 @@ fn spawn(assets: Res<DupixAsset>, mut commands: Commands, query: Query<&Dupix>) 
                     .with_scale(Vec3::splat(0.5))
                     .with_translation(Vec3::new(
                         (-500 - rng.gen_range(0..3000)) as f32,
-                        rng.gen_range(-400..400) as f32,
+                        rng.gen_range(-350..350) as f32,
                         -0.5,
                     )),
                 atlas: TextureAtlas {
@@ -38,7 +38,8 @@ fn spawn(assets: Res<DupixAsset>, mut commands: Commands, query: Query<&Dupix>) 
             Animable {
                 passed_frames: 0.,
                 current_frame: 0,
-                frames: 4,
+                start_frame: 0,
+                end_frame: 3,
                 fps: 15.,
             },
             Movable {
@@ -63,7 +64,7 @@ fn load_asset(
     dupix_asset.layout = layouts.add(TextureAtlasLayout::from_grid(
         Vec2::new(384., 114.),
         1,
-        4,
+        6,
         None,
         None,
     ));
