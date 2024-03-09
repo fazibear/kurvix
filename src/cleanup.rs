@@ -4,7 +4,7 @@ pub struct CameraPlugin;
 
 fn cleanup(mut commands: Commands, query: Query<(Entity, &GlobalTransform)>) {
     for (entity, transform) in query.iter() {
-        if transform.translation().distance(Vec3::ZERO) > 1100.0 {
+        if transform.translation().x > 1000.0 {
             commands.entity(entity).despawn_recursive();
         }
     }

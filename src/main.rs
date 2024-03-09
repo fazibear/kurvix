@@ -4,6 +4,7 @@ mod bomba;
 mod camera;
 mod cleanup;
 mod cursor;
+mod dupix;
 mod movable;
 mod orzel;
 use bevy::prelude::*;
@@ -30,6 +31,7 @@ fn main() {
             background::BackgroundPlugin,
             bomba::BombaPlugin,
             orzel::OrzelPlugin,
+            dupix::DupixPlugin,
         ))
         .run();
 }
