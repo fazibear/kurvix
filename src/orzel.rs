@@ -1,3 +1,4 @@
+use bevy::input::touch::TouchPhase;
 use bevy::prelude::*;
 
 use crate::animable::Animable;
@@ -45,7 +46,7 @@ fn animate(mut query: Query<(&Animable, &mut TextureAtlas), With<Orzel>>) {
     }
 }
 
-fn moves(
+fn mouse_moves(
     mut events: EventReader<CursorMoved>,
     mut query: Query<&mut Transform, With<Orzel>>,
     camera: Query<(&Camera, &GlobalTransform)>,
@@ -62,10 +63,36 @@ fn moves(
     }
 }
 
+fn touch_moves(
+    mut touch_events: EventReader<TouchInput>,
+    mut query: Query<&mut Transform, With<Orzel>>,
+    camera: Query<(&Camera, &GlobalTransform)>,
+) {
+    let mut orzel = query.single_mut();
+    let (camera, camera_transform) = camera.single();
+
+    for event in touch_events.read() {
+        // in real apps you probably want to store and track touch ids somewhere
+        match event.phase {
+            TouchPhase::Started => {}
+            TouchPhase::Moved => {
+                let position = camera
+                    .viewport_to_world_2d(camera_transform, event.position)
+                    .unwrap();
+                orzel.translation.x = position.x;
+                orzel.translation.y = position.y;
+            }
+            TouchPhase::Ended => {}
+            TouchPhase::Canceled => {}
+        }
+    }
+}
+
 impl Plugin for OrzelPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, setup);
         app.add_systems(Update, animate);
-        app.add_systems(Update, moves);
+        app.add_systems(Update, mouse_moves);
+        app.add_systems(Update, touch_moves);
     }
 }
