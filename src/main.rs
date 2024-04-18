@@ -6,6 +6,7 @@ mod cleanup;
 mod collisions;
 mod cursor;
 mod dupix;
+mod info;
 mod movable;
 mod orzel;
 
@@ -15,6 +16,7 @@ fn main() {
     let default_plugin = DefaultPlugins.set(WindowPlugin {
         primary_window: Some(Window {
             title: "Kurvix Saviours".to_string(),
+            resizable: false,
             ..Default::default()
         }),
         ..default()
@@ -35,6 +37,7 @@ fn main() {
             dupix::DupixPlugin,
             movable::MovablePlugin,
             orzel::OrzelPlugin,
+            info::InfoPlugin,
         ))
         .run();
 }
