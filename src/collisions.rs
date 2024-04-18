@@ -1,16 +1,17 @@
 use bevy::prelude::*;
 
+use crate::animable::Animable;
+use crate::bomba::Bomba;
+use crate::dupix::Dupix;
+use crate::movable::Movable;
+
 pub struct CollisionsPlugin;
 fn bomba_vs_dupix(
     mut commands: Commands,
-    q_bomba: Query<(Entity, &Transform), With<crate::bomba::Bomba>>,
+    q_bomba: Query<(Entity, &Transform), With<Bomba>>,
     mut q_dupix: Query<
-        (
-            &mut Transform,
-            &mut crate::movable::Movable,
-            &mut crate::animable::Animable,
-        ),
-        (With<crate::dupix::Dupix>, Without<crate::bomba::Bomba>),
+        (&mut Transform, &mut Movable, &mut Animable),
+        (With<Dupix>, Without<Bomba>),
     >,
 ) {
     for (bomba, bomba_transform) in q_bomba.iter() {

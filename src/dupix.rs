@@ -25,7 +25,7 @@ fn spawn(assets: Res<DupixAsset>, mut commands: Commands, query: Query<&Dupix>) 
                 transform: Transform::default()
                     .with_scale(Vec3::splat(0.5))
                     .with_translation(Vec3::new(
-                        (-500 - rng.gen_range(0..3000)) as f32,
+                        (-800 - rng.gen_range(0..3000)) as f32,
                         rng.gen_range(-350..350) as f32,
                         -0.5,
                     )),

@@ -4,6 +4,8 @@ use bevy::prelude::*;
 
 use crate::animable::Animable;
 use crate::movable::Movable;
+use crate::orzel::Orzel;
+
 pub struct BombaPlugin;
 
 #[derive(Component, Debug, Default)]
@@ -46,7 +48,7 @@ fn mouse_shoot(
     mut commands: Commands,
     mut events: EventReader<MouseButtonInput>,
     assets: Res<BombaAsset>,
-    query: Query<&Transform, With<crate::orzel::Orzel>>,
+    query: Query<&Transform, With<Orzel>>,
 ) {
     use bevy::input::ButtonState;
 
@@ -63,7 +65,7 @@ fn touch_shoot(
     mut commands: Commands,
     mut events: EventReader<TouchInput>,
     assets: Res<BombaAsset>,
-    query: Query<&Transform, With<crate::orzel::Orzel>>,
+    query: Query<&Transform, With<Orzel>>,
 ) {
     let orzel = query.single();
 
