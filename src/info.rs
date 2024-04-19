@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use bevy::sprite::Anchor;
 
+use crate::GameState;
+
 pub struct InfoPlugin;
 
 #[derive(Component, Debug)]
@@ -39,9 +41,15 @@ fn update(mut query: Query<(&mut Info, &mut Text)>) {
     text.sections[3].value = format!("{}", info.points);
 }
 
+fn reset(mut query: Query<&mut Info>) {
+    let mut info = query.single_mut();
+    info.points = 0;
+}
+
 impl Plugin for InfoPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, setup);
         app.add_systems(Update, update);
+        app.add_systems(OnEnter(GameState::Playing), reset);
     }
 }
