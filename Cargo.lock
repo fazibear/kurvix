@@ -2189,7 +2189,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "kurvix_saviours"
+name = "kurvix"
 version = "0.1.0"
 dependencies = [
  "bevy",

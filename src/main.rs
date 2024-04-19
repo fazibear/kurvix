@@ -23,7 +23,7 @@ enum GameState {
 fn main() {
     let default_plugin = DefaultPlugins.set(WindowPlugin {
         primary_window: Some(Window {
-            title: "Kurvix Saviours".to_string(),
+            title: "Kurvix".to_string(),
             resizable: false,
             ..Default::default()
         }),
