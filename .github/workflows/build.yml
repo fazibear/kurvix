@@ -33,7 +33,7 @@ jobs:
         run: cargo install wasm-bindgen-cli
       - run: rustup target install wasm32-unknown-unknown
       - run: cargo build --target wasm32-unknown-unknown --release
-      - run: wasm-bindgen --no-typescript --target web --out-dir ./out/ ./target/wasm32-unknown-unknown/release/kurvix_saviours.wasm
+      - run: wasm-bindgen --no-typescript --target web --out-dir ./out/ ./target/wasm32-unknown-unknown/release/kurvix.wasm
       - run: cp index.html out
       - run: cp -r assets out
       - name: Setup Pages
