@@ -9,8 +9,16 @@ mod dupix;
 mod info;
 mod movable;
 mod orzel;
+mod start;
 
 use bevy::prelude::*;
+
+#[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]
+enum GameState {
+    #[default]
+    Crashed,
+    Playing,
+}
 
 fn main() {
     let default_plugin = DefaultPlugins.set(WindowPlugin {
@@ -24,6 +32,8 @@ fn main() {
 
     App::new()
         .insert_resource(ClearColor(Color::rgb(0., 0., 0.)))
+        .insert_state(GameState::Playing)
+        .insert_state(GameState::Crashed)
         .add_plugins((
             // Add the plugins
             default_plugin,
@@ -38,6 +48,7 @@ fn main() {
             movable::MovablePlugin,
             orzel::OrzelPlugin,
             info::InfoPlugin,
+            start::StartPlugin,
         ))
         .run();
 }

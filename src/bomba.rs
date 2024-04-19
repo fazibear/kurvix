@@ -1,10 +1,12 @@
 use bevy::input::mouse::MouseButtonInput;
 use bevy::input::touch::TouchPhase;
+use bevy::input::ButtonState;
 use bevy::prelude::*;
 
 use crate::animable::Animable;
 use crate::movable::Movable;
 use crate::orzel::Orzel;
+use crate::GameState;
 
 pub struct BombaPlugin;
 
@@ -50,8 +52,6 @@ fn mouse_shoot(
     assets: Res<BombaAsset>,
     query: Query<&Transform, With<Orzel>>,
 ) {
-    use bevy::input::ButtonState;
-
     let orzel = query.single();
 
     for event in events.read() {
@@ -101,8 +101,8 @@ impl Plugin for BombaPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<BombaAsset>();
         app.add_systems(Startup, load_asset);
-        app.add_systems(Update, animate);
-        app.add_systems(Update, mouse_shoot);
-        app.add_systems(Update, touch_shoot);
+        app.add_systems(Update, animate.run_if(in_state(GameState::Playing)));
+        app.add_systems(Update, mouse_shoot.run_if(in_state(GameState::Playing)));
+        app.add_systems(Update, touch_shoot.run_if(in_state(GameState::Playing)));
     }
 }

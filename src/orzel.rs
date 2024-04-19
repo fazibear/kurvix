@@ -2,6 +2,8 @@ use bevy::input::touch::TouchPhase;
 use bevy::prelude::*;
 
 use crate::animable::Animable;
+use crate::GameState;
+
 pub struct OrzelPlugin;
 
 #[derive(Component, Debug, Default)]
@@ -28,6 +30,7 @@ fn setup(
             texture,
             transform: Transform::from_scale(Vec3::splat(0.2)),
             atlas: TextureAtlas { layout, index: 0 },
+            visibility: Visibility::Hidden,
             ..default()
         },
         Animable {
@@ -38,6 +41,16 @@ fn setup(
             fps: 15.,
         },
     ));
+}
+
+fn show(mut query: Query<&mut Visibility, With<Orzel>>) {
+    let mut visibility = query.single_mut();
+    *visibility = Visibility::Visible;
+}
+
+fn hide(mut query: Query<&mut Visibility, With<Orzel>>) {
+    let mut visibility = query.single_mut();
+    *visibility = Visibility::Hidden;
 }
 
 fn animate(mut query: Query<(&Animable, &mut TextureAtlas), With<Orzel>>) {
@@ -91,8 +104,10 @@ fn touch_moves(
 impl Plugin for OrzelPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, setup);
+        app.add_systems(OnEnter(GameState::Playing), show);
+        app.add_systems(OnExit(GameState::Playing), hide);
         app.add_systems(Update, animate);
-        app.add_systems(Update, mouse_moves);
-        app.add_systems(Update, touch_moves);
+        app.add_systems(Update, mouse_moves.run_if(in_state(GameState::Playing)));
+        app.add_systems(Update, touch_moves.run_if(in_state(GameState::Playing)));
     }
 }

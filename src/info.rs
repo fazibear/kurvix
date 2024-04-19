@@ -9,7 +9,7 @@ pub struct Info {
 }
 
 fn setup(mut commands: Commands, assets: Res<AssetServer>) {
-    let text_style = TextStyle {
+    let style = TextStyle {
         font: assets.load("font.ttf"),
         font_size: 20.0,
         color: Color::rgb(0., 0.8, 0.),
@@ -20,22 +20,10 @@ fn setup(mut commands: Commands, assets: Res<AssetServer>) {
         Text2dBundle {
             text: Text {
                 sections: vec![
-                    TextSection {
-                        value: "MIEJSCE:    GALAKTYKA    KURVIX\n".to_string(),
-                        style: text_style.clone(),
-                    },
-                    TextSection {
-                        value: "MISJA:    NAPIERDALAC\n".to_string(),
-                        style: text_style.clone(),
-                    },
-                    TextSection {
-                        value: "PUNKTY:    ".to_string(),
-                        style: text_style.clone(),
-                    },
-                    TextSection {
-                        value: "0".to_string(),
-                        style: text_style.clone(),
-                    },
+                    TextSection::new("MIEJSCE:    GALAKTYKA    KURVIX\n", style.clone()),
+                    TextSection::new("MISJA:    NAPIERDALAC\n", style.clone()),
+                    TextSection::new("PUNKTY:    ", style.clone()),
+                    TextSection::new("0", style.clone()),
                 ],
                 ..default()
             },
