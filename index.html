@@ -78,7 +78,7 @@
 </body>
 <script>
   let fullscreen = function (e) {
-    var elem = document.getElementsByTagName('canvas')[0];
+    var elem = document.window;
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.webkitRequestFullscreen) { /* Safari */
