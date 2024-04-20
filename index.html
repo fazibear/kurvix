@@ -14,13 +14,11 @@
 
   <meta charset="utf-8">
   <title>Kurvix</title>
-</head>
-
-<body style="margin: 0px;">
   <style>
     body {
       margin: 0;
       background: #000;
+      color: #0a0;
       font-family: Arial, sans-serif;
       text-align: center;
     }
@@ -28,14 +26,45 @@
     * {
       outline: 0;
     }
+
+    #full_screen {
+      position: absolute;
+      left: calc(100% - 64px);
+      margin-left: auto;
+      font-size: 2em;
+      cursor: pointer;
+    }
   </style>
   <script type="module">
     import init from './kurvix.js'
 
-    init().catch((error) => {
-      if (!error.message.startsWith("Using exceptions for control flow, don't mind me. This isn't actually an error!")) {
-        throw error;
-      }
+    init()
+      .catch((error) => {
+        if (!error.message.startsWith("Using exceptions for control flow, don't mind me. This isn't actually an error!")) {
+          throw error;
+        }
+      });
+  </script>
+</head>
+
+<body>
+  <div id="full_screen">
+    <svg width="64" height="64" viewBox="0 0 512 512" style="color:currentColor" xmlns="http://www.w3.org/2000/svg"
+      class="h-full w-full">
+      <rect width="512" height="512" x="0" y="0" rx="30" fill="transparent" stroke="transparent" stroke-width="0"
+        stroke-opacity="100%" paint-order="stroke"></rect><svg width="256px" height="256px" viewBox="0 0 16 16"
+        fill="currentColor" x="128" y="128" role="img" style="display:inline-block;vertical-align:middle"
+        xmlns="http://www.w3.org/2000/svg">
+        <g fill="currentColor">
+          <path fill="currentColor" fill-rule="evenodd"
+            d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707zm0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707zm-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707z" />
+        </g>
+      </svg>
+    </svg>
+  </div>
+  <script>
+    document.getElementById('full_screen').addEventListener('click', () => {
+      document.documentElement.requestFullscreen();
     });
   </script>
 </body>
