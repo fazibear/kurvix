@@ -2,8 +2,11 @@ use bevy::prelude::*;
 
 use crate::animable::Animable;
 use crate::movable::Movable;
-pub struct DupixPlugin;
+use crate::GameState;
+
 use rand::Rng;
+
+pub struct DupixPlugin;
 
 #[derive(Component, Debug, Default)]
 pub struct Dupix {}
@@ -70,11 +73,19 @@ fn load_asset(
     ));
 }
 
+fn reset(mut command: Commands, query: Query<Entity, With<Dupix>>) {
+    for entity in query.iter() {
+        command.entity(entity).despawn_recursive();
+        // commands.despawn(entity);
+    }
+}
+
 impl Plugin for DupixPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<DupixAsset>();
         app.add_systems(Startup, load_asset);
         app.add_systems(Update, animate);
         app.add_systems(Update, spawn);
+        app.add_systems(OnEnter(GameState::Playing), reset);
     }
 }
