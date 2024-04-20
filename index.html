@@ -78,7 +78,15 @@
 </body>
 <script>
   let fullscreen = function (e) {
-    document.documentElement.requestFullscreen();
+    var el = document.getElementsByTagName('canvas')[0];
+
+    if (el.webkitRequestFullScreen) {
+      el.webkitRequestFullScreen();
+    }
+    else {
+      el.mozRequestFullScreen();
+    }
+
     e.preventDefault();
   };
 
