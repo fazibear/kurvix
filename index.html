@@ -16,11 +16,15 @@
   <title>Kurvix</title>
   <style>
     body {
-      margin: 0;
       background: #000;
       color: #0a0;
-      font-family: Arial, sans-serif;
-      text-align: center;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
     }
 
     * {
@@ -33,6 +37,15 @@
       margin-left: auto;
       font-size: 2em;
       cursor: pointer;
+    }
+
+    canvas {
+      position: absolute;
+      display: block;
+      top: 50%;
+      left: 50%;
+      margin-left: -640px;
+      margin-top: -360px;
     }
   </style>
   <script type="module">
@@ -72,7 +85,7 @@
   let fs_icon = document.getElementById('full_screen');
 
   fs_icon.addEventListener('mousedown', fullscreen);
-  fs_icon.addEventListener('touchstart', fullscreen);
+  fs_icon.addEventListener('touchend', fullscreen);
 </script>
 
 </html>
