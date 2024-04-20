@@ -30,12 +30,7 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: cargo install wasm-bindgen-cli
-      - run: rustup target install wasm32-unknown-unknown
-      - run: cargo build --target wasm32-unknown-unknown --release
-      - run: wasm-bindgen --no-typescript --target web --out-dir ./out/ ./target/wasm32-unknown-unknown/release/kurvix.wasm
-      - run: cp index.html out
-      - run: cp -r assets out
+        run: ./wasm_build.sh
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
