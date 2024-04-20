@@ -64,9 +64,15 @@
   </div>
 </body>
 <script>
-  document.getElementById('full_screen').addEventListener('mousedown', () => {
+  let fullscreen = function (e) {
     document.documentElement.requestFullscreen();
-  });
+    e.preventDefault();
+  };
+
+  document
+    .getElementById('full_screen')
+    .addEventListener('mousedown', fullscreen)
+    .addEventListener('touchstart', fullscreen);
 </script>
 
 </html>
