@@ -9,6 +9,7 @@ mod dupix;
 mod info;
 mod movable;
 mod orzel;
+mod sounds;
 mod start;
 
 use bevy::prelude::*;
@@ -49,6 +50,7 @@ fn main() {
             orzel::OrzelPlugin,
             info::InfoPlugin,
             start::StartPlugin,
+            sounds::SoundsPlugin,
         ))
         .run();
 }

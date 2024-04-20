@@ -40,6 +40,7 @@ fn bomba_vs_dupix(
         (&mut Transform, &mut Movable, &mut Animable),
         (With<Dupix>, Without<Bomba>),
     >,
+    assets: ResMut<AssetServer>,
 ) {
     let mut info = info.single_mut();
     for (bomba, bomba_transform) in q_bomba.iter() {
@@ -49,6 +50,10 @@ fn bomba_vs_dupix(
                 .distance(dupix_transform.translation)
                 < 40.
             {
+                commands.spawn(AudioBundle {
+                    source: assets.load("bam.ogg"),
+                    ..Default::default()
+                });
                 commands.entity(bomba).despawn_recursive();
                 info.points += 1;
                 dupix_movable.direction.y = -450.;
