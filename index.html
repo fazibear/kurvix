@@ -69,10 +69,10 @@
     e.preventDefault();
   };
 
-  document
-    .getElementById('full_screen')
-    .addEventListener('mousedown', fullscreen)
-    .addEventListener('touchstart', fullscreen);
+  let fs_icon = document.getElementById('full_screen');
+
+  fs_icon.addEventListener('mousedown', fullscreen);
+  fs_icon.addEventListener('touchstart', fullscreen);
 </script>
 
 </html>
