@@ -29,8 +29,7 @@ jobs:
             ~/.cargo/git/
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: ./wasm_build.sh
+      - run: ./wasm_build.sh
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
