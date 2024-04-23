@@ -7,7 +7,6 @@ edition = "2021"
 bevy = "0.13.2"
 bevy_asset_loader = { version = "0.20.1", features = ["2d"] }
 rand = "0.8.5"
-wasm-bindgen-cli = "0.2.92"
 
 [profile.release]
 opt-level = 's'
