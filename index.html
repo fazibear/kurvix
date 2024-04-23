@@ -15,36 +15,47 @@
     <meta charset="utf-8">
     <title>Kurvix</title>
     <style>
-    body {
-      background: #000;
-      color: #0a0;
-    }
-
-    html,
-    body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-    }
 
     * {
       outline: 0;
     }
 
+    html,
+    body {
+      margin: 0;
+    }
+
+    body {
+      background: #000;
+      color: #0a0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     #full_screen {
       position: absolute;
       left: calc(100% - 64px);
-      margin-left: auto;
+      top: 0%;
       font-size: 2em;
       cursor: pointer;
     }
 
     canvas {
-      display: block;
-      height: 100% !important;
       width: auto !important;
-      margin: 0 auto;
+      height: auto !important;
+      object-fit: contain;
+      max-height: 100%;
+      max-width: 100%;
+      display: block;
     }
+
     </style>
     <script type="module">
     import init from './kurvix.js'
