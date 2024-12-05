@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-pub struct CameraPlugin;
+pub struct CleanupPlugin;
 
 fn cleanup(mut commands: Commands, query: Query<(Entity, &GlobalTransform)>) {
     for (entity, transform) in query.iter() {
@@ -14,7 +14,7 @@ fn cleanup(mut commands: Commands, query: Query<(Entity, &GlobalTransform)>) {
     }
 }
 
-impl Plugin for CameraPlugin {
+impl Plugin for CleanupPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Update, cleanup);
     }

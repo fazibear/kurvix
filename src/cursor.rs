@@ -9,7 +9,7 @@ fn hide_cursor(
 ) {
     let mut window = query.single_mut();
     for _event in events.read() {
-        window.cursor.visible = false;
+        window.cursor_options.visible = false;
     }
 }
 
@@ -19,7 +19,7 @@ fn show_cursor(
 ) {
     let mut window = query.single_mut();
     for _event in events.read() {
-        window.cursor.visible = true;
+        window.cursor_options.visible = true;
     }
 }
 

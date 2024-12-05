@@ -1,12 +1,8 @@
 use bevy::prelude::*;
-
 pub struct CameraPlugin;
 
 fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle {
-        transform: Transform::from_translation(Vec3::new(-10., 0., 10.)),
-        ..Default::default()
-    });
+    commands.spawn(Camera2d {});
 }
 
 impl Plugin for CameraPlugin {

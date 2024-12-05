@@ -4,34 +4,21 @@ use bevy::input::ButtonState;
 use bevy::prelude::*;
 
 use crate::GameState;
-use bevy::audio::PlaybackMode;
 pub struct SoundsPlugin;
 
-#[derive(Component, Debug)]
-pub struct Sounds {}
+//#[derive(Component, Debug)]
+//pub struct Sounds {}
 
 fn napierdalamy(assets: Res<AssetServer>, mut commands: Commands) {
-    commands.spawn(AudioBundle {
-        source: assets.load("napierdalamy.ogg"),
-        ..Default::default()
-    });
+    commands.spawn(AudioPlayer::new(assets.load("napierdalamy.ogg")));
 }
 
 fn bum(assets: Res<AssetServer>, mut commands: Commands) {
-    commands.spawn(AudioBundle {
-        source: assets.load("bum.ogg"),
-        ..Default::default()
-    });
+    commands.spawn(AudioPlayer::new(assets.load("bum.ogg")));
 }
 
 fn dupix(assets: Res<AssetServer>, mut commands: Commands) {
-    commands.spawn(AudioBundle {
-        source: assets.load("dupix.ogg"),
-        settings: PlaybackSettings {
-            mode: PlaybackMode::Loop,
-            ..Default::default()
-        },
-    });
+    commands.spawn(AudioPlayer::new(assets.load("dupix.ogg")));
 }
 
 fn mouse_shoot(
@@ -41,10 +28,7 @@ fn mouse_shoot(
 ) {
     for event in events.read() {
         if event.state == ButtonState::Pressed {
-            commands.spawn(AudioBundle {
-                source: assets.load("shot.ogg"),
-                ..Default::default()
-            });
+            commands.spawn(AudioPlayer::new(assets.load("shot.ogg")));
         }
     }
 }
@@ -56,10 +40,7 @@ fn touch_shoot(
 ) {
     for event in events.read() {
         if event.phase == TouchPhase::Ended {
-            commands.spawn(AudioBundle {
-                source: assets.load("shot.ogg"),
-                ..Default::default()
-            });
+            commands.spawn(AudioPlayer::new(assets.load("shot.ogg")));
         }
     }
 }
