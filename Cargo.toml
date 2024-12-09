@@ -4,9 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy = "0.13.2"
-bevy_asset_loader = { version = "0.20.1", features = ["2d"] }
-rand = "0.8.5"
+bevy = "0.15"
+rand = "0.8"
 
 [profile.release]
 opt-level = 's'
