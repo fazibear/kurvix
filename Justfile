@@ -2,7 +2,7 @@ OUT := "./out"
 WASM_FILE := "./target/wasm32-unknown-unknown/release/kurvix.wasm"
 
 wasm_setup:
-  @cargo install wasm-bindgen-cli
+  @-cargo install wasm-bindgen-cli
   @rustup target install wasm32-unknown-unknown
 
 wasm_build: wasm_setup
