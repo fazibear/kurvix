@@ -22,17 +22,16 @@ pub struct BombaAsset {
 fn shoot(commands: &mut Commands, assets: &Res<BombaAsset>, translation: Vec3) {
     commands.spawn((
         Bomba {},
-        SpriteSheetBundle {
-            texture: assets.texture.clone(),
-            transform: Transform::default()
-                .with_scale(Vec3::splat(0.1))
-                .with_translation(Vec3::new(translation.x, translation.y, -0.5)),
-            atlas: TextureAtlas {
+        Sprite::from_atlas_image(
+            assets.texture.clone(),
+            TextureAtlas {
                 layout: assets.layout.clone(),
                 index: 0,
             },
-            ..default()
-        },
+        ),
+        Transform::default()
+            .with_scale(Vec3::splat(0.1))
+            .with_translation(Vec3::new(translation.x, translation.y, -0.5)),
         Animable {
             passed_frames: 0.,
             current_frame: 0,
@@ -76,9 +75,11 @@ fn touch_shoot(
     }
 }
 
-fn animate(mut query: Query<(&Animable, &mut TextureAtlas), With<Bomba>>) {
-    for (animable, mut texture_atlas) in query.iter_mut() {
-        texture_atlas.index = animable.current_frame;
+fn animate(mut query: Query<(&Animable, &mut Sprite), With<Bomba>>) {
+    for (animable, mut sprite) in query.iter_mut() {
+        if let Some(atlas) = &mut sprite.texture_atlas {
+            atlas.index = animable.current_frame;
+        }
     }
 }
 
@@ -89,7 +90,7 @@ fn load_asset(
 ) {
     bomba_asset.texture = asset_server.load("bomba.png");
     bomba_asset.layout = layouts.add(TextureAtlasLayout::from_grid(
-        Vec2::new(273., 208.),
+        UVec2::new(273, 208),
         1,
         6,
         None,

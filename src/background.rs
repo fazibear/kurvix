@@ -25,24 +25,21 @@ fn setup(
         for x in -5..5 {
             commands.spawn((
                 Stars {},
-                SpriteBundle {
-                    texture: stars.clone(),
-                    transform: Transform::default()
-                        .with_scale(Vec3::splat(0.5))
-                        .with_translation(Vec3::new(
-                            (x * 200 + rng.gen_range(300..500)) as f32,
-                            (y * 200 + rng.gen_range(300..500)) as f32,
-                            -0.9,
-                        )),
-                    ..default()
-                },
+                Sprite::from_image(stars.clone()),
+                Transform::default()
+                    .with_scale(Vec3::splat(0.5))
+                    .with_translation(Vec3::new(
+                        (x * 200 + rng.gen_range(300..500)) as f32,
+                        (y * 200 + rng.gen_range(300..500)) as f32,
+                        -0.9,
+                    )),
             ));
         }
     }
 
     let texture = asset_server.load("background.png");
     let layout = layouts.add(TextureAtlasLayout::from_grid(
-        Vec2::new(912., 16.),
+        UVec2::new(912, 16),
         1,
         4,
         None,
@@ -55,32 +52,33 @@ fn setup(
                 display_time: 0.1,
                 displayed_time: 0.0,
             },
-            SpriteSheetBundle {
-                texture: texture.clone(),
-                transform: Transform::default()
-                    .with_scale(Vec3::splat(0.6))
-                    .with_translation(Vec3::new(0.0, 0.0, -0.8)),
-                atlas: TextureAtlas {
+            Sprite::from_atlas_image(
+                texture.clone(),
+                TextureAtlas {
                     layout: layout.clone(),
                     index: rng.gen_range(0..4),
                 },
-                ..default()
-            },
+            ),
+            Transform::default()
+                .with_scale(Vec3::splat(0.6))
+                .with_translation(Vec3::new(0.0, 0.0, -0.8)),
         ));
     }
 }
 
 fn update(
-    mut query: Query<(&mut Background, &mut TextureAtlas, &mut Transform), With<Background>>,
+    mut query: Query<(&mut Background, &mut Sprite, &mut Transform), With<Background>>,
     time: Res<Time>,
 ) {
     let mut rng = rand::thread_rng();
-    for (mut background, mut texture_atlas, mut transform) in query.iter_mut() {
-        if time.elapsed_seconds() - background.displayed_time > background.display_time {
-            background.displayed_time = time.elapsed_seconds();
+    for (mut background, mut sprite, mut transform) in query.iter_mut() {
+        if time.elapsed_secs() - background.displayed_time > background.display_time {
+            background.displayed_time = time.elapsed_secs();
             transform.translation.x = rng.gen_range(-500.0..500.0);
             transform.translation.y = rng.gen_range(-400.0..400.0);
-            texture_atlas.index = rng.gen_range(0..4);
+            if let Some(atlas) = &mut sprite.texture_atlas {
+                atlas.index = rng.gen_range(0..4);
+            }
         } else {
             // transform.translation.x += 5.0
         }

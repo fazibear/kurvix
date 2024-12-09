@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use crate::animable::Animable;
 use crate::bomba::Bomba;
 use crate::dupix::Dupix;
-use crate::info::Info;
+use crate::info_text::InfoText;
 use crate::movable::Movable;
 use crate::orzel::Orzel;
 use crate::GameState;
@@ -34,7 +34,7 @@ fn is_colling(
 
 fn bomba_vs_dupix(
     mut commands: Commands,
-    mut info: Query<&mut Info>,
+    mut info: Query<&mut InfoText>,
     q_bomba: Query<(Entity, &Transform), (With<Bomba>, Without<Dupix>)>,
     mut q_dupix: Query<
         (&mut Transform, &mut Movable, &mut Animable),
@@ -42,7 +42,6 @@ fn bomba_vs_dupix(
     >,
     assets: ResMut<AssetServer>,
 ) {
-    let mut info = info.single_mut();
     for (bomba, bomba_transform) in q_bomba.iter() {
         for (mut dupix_transform, mut dupix_movable, mut dupix_animable) in q_dupix.iter_mut() {
             if bomba_transform
@@ -50,12 +49,11 @@ fn bomba_vs_dupix(
                 .distance(dupix_transform.translation)
                 < 40.
             {
-                commands.spawn(AudioBundle {
-                    source: assets.load("bam.ogg"),
-                    ..Default::default()
-                });
+                commands.spawn(AudioPlayer::new(assets.load("bam.ogg")));
                 commands.entity(bomba).despawn_recursive();
-                info.points += 1;
+                for mut info in info.iter_mut() {
+                    info.points += 1;
+                }
                 dupix_movable.direction.y = -450.;
                 dupix_transform.rotation.z = -0.3;
                 dupix_animable.start_frame = 4;

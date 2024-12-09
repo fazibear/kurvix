@@ -4,13 +4,13 @@ mod bomba;
 mod camera;
 mod cleanup;
 mod collisions;
+mod crash_text;
 mod cursor;
 mod dupix;
-mod info;
+mod info_text;
 mod movable;
 mod orzel;
 mod sounds;
-mod start;
 
 use bevy::prelude::*;
 
@@ -25,6 +25,7 @@ fn main() {
     let default_plugin = DefaultPlugins.set(WindowPlugin {
         primary_window: Some(Window {
             title: "Kurvix".to_string(),
+            resolution: (1280., 720.).into(),
             resizable: false,
             ..Default::default()
         }),
@@ -32,9 +33,6 @@ fn main() {
     });
 
     App::new()
-        .insert_resource(ClearColor(Color::rgb(0., 0., 0.)))
-        .insert_state(GameState::Playing)
-        .insert_state(GameState::Crashed)
         .add_plugins((
             // Add the plugins
             default_plugin,
@@ -42,15 +40,18 @@ fn main() {
             background::BackgroundPlugin,
             bomba::BombaPlugin,
             camera::CameraPlugin,
-            cleanup::CameraPlugin,
+            cleanup::CleanupPlugin,
             collisions::CollisionsPlugin,
+            crash_text::CrashTextPlugin,
             cursor::CursorPlugin,
             dupix::DupixPlugin,
+            info_text::InfoTextPlugin,
             movable::MovablePlugin,
             orzel::OrzelPlugin,
-            info::InfoPlugin,
-            start::StartPlugin,
             sounds::SoundsPlugin,
         ))
+        .insert_resource(ClearColor(Color::srgb(0., 0., 0.)))
+        .insert_state(GameState::Playing)
+        .insert_state(GameState::Crashed)
         .run();
 }

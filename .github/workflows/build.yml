@@ -29,7 +29,8 @@ jobs:
             ~/.cargo/git/
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - run: ./wasm_build.sh
+      - uses: extractions/setup-just@v2
+      - run: just wasm
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4

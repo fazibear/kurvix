@@ -16,7 +16,7 @@ fn setup(
 ) {
     let texture = asset_server.load("orzel.png");
     let layout = layouts.add(TextureAtlasLayout::from_grid(
-        Vec2::new(780., 360.),
+        UVec2::new(780, 360),
         1,
         4,
         None,
@@ -26,13 +26,15 @@ fn setup(
     // Use only the subset of sprites in the sheet that make up the run animable
     commands.spawn((
         Orzel {},
-        SpriteSheetBundle {
-            texture,
-            transform: Transform::from_scale(Vec3::splat(0.2)),
-            atlas: TextureAtlas { layout, index: 0 },
-            visibility: Visibility::Hidden,
-            ..default()
-        },
+        Sprite::from_atlas_image(
+            texture.clone(),
+            TextureAtlas {
+                layout,
+                index: 0,
+                ..default()
+            },
+        ),
+        Transform::from_scale(Vec3::splat(0.2)),
         Animable {
             passed_frames: 0.,
             current_frame: 0,
@@ -53,9 +55,11 @@ fn hide(mut query: Query<&mut Visibility, With<Orzel>>) {
     *visibility = Visibility::Hidden;
 }
 
-fn animate(mut query: Query<(&Animable, &mut TextureAtlas), With<Orzel>>) {
-    for (animable, mut texture_atlas) in query.iter_mut() {
-        texture_atlas.index = animable.current_frame;
+fn animate(mut query: Query<(&Animable, &mut Sprite), With<Orzel>>) {
+    for (animable, mut sprite) in query.iter_mut() {
+        if let Some(atlas) = &mut sprite.texture_atlas {
+            atlas.index = animable.current_frame;
+        }
     }
 }
 

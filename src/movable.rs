@@ -9,8 +9,8 @@ pub struct Movable {
 
 fn moveit(mut query: Query<(&mut Movable, &mut Transform)>, time: Res<Time>) {
     for (movable, mut transform) in query.iter_mut() {
-        transform.translation.x += movable.direction.x * time.delta_seconds();
-        transform.translation.y += movable.direction.y * time.delta_seconds();
+        transform.translation.x += movable.direction.x * time.delta_secs();
+        transform.translation.y += movable.direction.y * time.delta_secs();
     }
 }
 
