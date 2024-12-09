@@ -23,21 +23,21 @@ fn spawn(assets: Res<DupixAsset>, mut commands: Commands, query: Query<&Dupix>) 
     if query.iter().count() < 10 {
         commands.spawn((
             Dupix {},
-            SpriteSheetBundle {
-                texture: assets.texture.clone(),
-                transform: Transform::default()
-                    .with_scale(Vec3::splat(0.5))
-                    .with_translation(Vec3::new(
-                        (-800 - rng.gen_range(0..3000)) as f32,
-                        rng.gen_range(-350..350) as f32,
-                        -0.5,
-                    )),
-                atlas: TextureAtlas {
+            Sprite::from_atlas_image(
+                assets.texture.clone(),
+                TextureAtlas {
                     layout: assets.layout.clone(),
                     index: 0,
+                    ..default()
                 },
-                ..default()
-            },
+            ),
+            Transform::default()
+                .with_scale(Vec3::splat(0.5))
+                .with_translation(Vec3::new(
+                    (-800 - rng.gen_range(0..3000)) as f32,
+                    rng.gen_range(-350..350) as f32,
+                    -0.5,
+                )),
             Animable {
                 passed_frames: 0.,
                 current_frame: 0,
@@ -52,9 +52,11 @@ fn spawn(assets: Res<DupixAsset>, mut commands: Commands, query: Query<&Dupix>) 
     }
 }
 
-fn animate(mut query: Query<(&Animable, &mut TextureAtlas), With<Dupix>>) {
-    for (animable, mut texture_atlas) in query.iter_mut() {
-        texture_atlas.index = animable.current_frame;
+fn animate(mut query: Query<(&Animable, &mut Sprite), With<Dupix>>) {
+    for (animable, mut sprite) in query.iter_mut() {
+        if let Some(atlas) = &mut sprite.texture_atlas {
+            atlas.index = animable.current_frame;
+        }
     }
 }
 
@@ -65,7 +67,7 @@ fn load_asset(
 ) {
     dupix_asset.texture = asset_server.load("dupix.png");
     dupix_asset.layout = layouts.add(TextureAtlasLayout::from_grid(
-        Vec2::new(384., 114.),
+        UVec2::new(384, 114),
         1,
         6,
         None,

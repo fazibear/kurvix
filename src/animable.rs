@@ -24,7 +24,7 @@ fn increment_frame(animable: &mut Animable, times: usize) {
 
 fn animate(mut query: Query<&mut Animable>, time: Res<Time>) {
     for mut animable in query.iter_mut() {
-        animable.passed_frames += time.delta_seconds() * animable.fps;
+        animable.passed_frames += time.delta_secs() * animable.fps;
         let passed_whole_frames = animable.passed_frames.floor() as usize;
         increment_frame(&mut animable, passed_whole_frames);
         animable.passed_frames -= animable.passed_frames.floor();
